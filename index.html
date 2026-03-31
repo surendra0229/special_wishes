@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Akka 🎂</title>
+<title>Happy Birthday Akka🎂</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",system-ui,sans-serif}
 
+/* ===== BODY & BACKGROUND ===== */
 body{
   min-height:100vh;
   background:radial-gradient(circle at top,#ffdde1,#ee9ca7,#3a1c71);
@@ -15,6 +16,7 @@ body{
   position:relative;
 }
 
+/* ===== NAME INPUT SCREEN ===== */
 #nameScreen{
   position:fixed;inset:0;background:rgba(0,0,0,.7);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -24,32 +26,28 @@ body{
 #nameInput{padding:12px 18px;font-size:1rem;border-radius:8px;border:none;outline:none;width:250px;margin-bottom:16px}
 #startBtn{padding:10px 20px;border:none;border-radius:999px;background:linear-gradient(135deg,#ff9a9e,#fecfef);color:#4a148c;font-size:.95rem;cursor:pointer}
 
-/* REMOVE BALLOONS COMPLETELY */
-
-/* CONFETTI BURST */
-.confetti{
-  position:fixed;
-  width:8px;height:8px;
-  background:red;
-  top:50%;left:50%;
-  opacity:0.9;
-  border-radius:50%;
-  animation:explode 0.8s ease-out forwards;
-  z-index:999;
+/* ===== FLOATING BALLOONS ===== */
+.balloon{
+  position:absolute;bottom:-120px;width:60px;height:80px;
+  border-radius:50% 50% 45% 45%;
+  animation:floatUp linear infinite;
+  opacity:.85;
+  z-index:0;
 }
-
-@keyframes explode{
-  to{
-    transform:translate(var(--x),var(--y)) scale(0.5);
-    opacity:0;
-  }
+.balloon::after{
+  content:"";position:absolute;bottom:-25px;left:50%;
+  width:2px;height:30px;background:rgba(255,255,255,.7);
 }
+@keyframes floatUp{to{transform:translateY(-120vh)}}
 
+/* ===== PAGE SYSTEM ===== */
 .scene{perspective:1200px;position:relative;min-height:100vh;display:none;}
 .page{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .8s ease,opacity .5s ease}
 .hidden{opacity:0;pointer-events:none}
 .flip-out{transform:rotateY(-90deg)}
+.flip-in{transform:rotateY(0deg)}
 
+/* ===== CARD STYLES ===== */
 .container,.card{
   width:min(480px,95vw);
   background:rgba(0,0,0,.22);
@@ -58,6 +56,8 @@ body{
   text-align:center;
   backdrop-filter:blur(14px);
   box-shadow:0 18px 45px rgba(0,0,0,.45);
+  z-index:2;
+  position:relative;
 }
 h1{font-size:2.2rem;background:linear-gradient(90deg,#ffeb3b,#ff9800,#ff4081);-webkit-background-clip:text;color:transparent}
 .subtitle{letter-spacing:.2em;font-size:.85rem;margin:8px 0 14px}
@@ -65,6 +65,7 @@ h1{font-size:2.2rem;background:linear-gradient(90deg,#ffeb3b,#ff9800,#ff4081);-w
 .message,.wish-text{font-size:.95rem;line-height:1.7;margin-bottom:16px}
 .typed{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;min-height:22px;margin-bottom:18px}
 
+/* ===== BUTTONS ===== */
 .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 button{
   padding:10px 18px;border:none;border-radius:999px;
@@ -73,6 +74,11 @@ button{
 }
 .secondary{background:transparent;border:1px solid rgba(255,255,255,.6);color:#fff}
 
+/* ===== CONFETTI ===== */
+.confetti{position:fixed;top:-20px;width:8px;height:14px;border-radius:2px;animation:fall 4s linear forwards;z-index:999}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+
+/* ===== REVEAL SLIDES ===== */
 .reveal-container{display:flex;flex-direction:column;align-items:center;gap:12px;}
 .arrow-btn{
   padding:8px 16px;border:none;border-radius:999px;
@@ -84,22 +90,12 @@ button{
   border-radius:16px;
   box-shadow:0 10px 20px rgba(0,0,0,.45);
 }
-.photo-controls{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-top:10px;
-}
-
-.back-btn{
-  display:block;
-  margin:15px auto 0;
-}
 .option-btns{display:flex;gap:20px;justify-content:center;margin-top:12px;}
 </style>
 </head>
 <body>
 
+<!-- NAME SCREEN -->
 <div id="nameScreen">
   <h2>Enter your name 💖</h2>
   <input type="text" id="nameInput" placeholder="Your name here">
@@ -108,7 +104,8 @@ button{
 
 <div class="scene">
 
-<div class="page" id="mainPage">
+<!-- MAIN PAGE -->
+<div class="page flip-in" id="mainPage">
   <div class="container">
     <h1>Happy Birthday</h1>
     <div class="subtitle">to my lovely sister</div>
@@ -116,16 +113,17 @@ button{
     <p class="message">You are not just my sister — you are my strength, my supporter, my guide, and my forever lovely Sister💗💖💫</p>
     <p class="typed" id="typedLine"></p>
     <div class="btn-row">
-      <button id="surpriseBtn">See Your Surprise 🎁</button>
+      <button id="surpriseBtn">See Your Surprise🎁</button>
       <button class="secondary" id="wishBtn">Open My Wish 💌</button>
     </div>
   </div>
 </div>
 
+<!-- SURPRISE PAGE -->
 <div class="page hidden" id="wishPage">
-  <div class="card">
+  <div class="card reveal-container">
     <h2>🎉 My Wish ! 🎉</h2>
-    <p class="message">
+    <p class="message" style="font-size:1rem;color:#ffd740;line-height:1.5;">
       You are amazing, and I wish you endless happiness 💖<br>
       Whenever you get low, just call me or Text me I put my efforts to heal you and make you Smile 😊😇<br>
       I will always be there for you Akka 😌🧿
@@ -134,110 +132,139 @@ button{
   </div>
 </div>
 
+<!-- WISH PAGE -->
 <div class="page hidden" id="surprisePage">
-  <div class="card">
+  <div class="card reveal-container">
     <h2>Our Memories 📸</h2>
-    <button id="revealBtn">Reveal..🫣</button>
-    <button id="backFromSurprise">← Back</button>
+    <p class="wish-text">No matter where life takes us, I hope you always remember this — Our cute memories from me💖</p>
+    <p>Once again Happy B'day Akka........💗💖</p>
+    <h3 id="memoriesQuestion" style="display:none;">I want to show something to you?</h3>
+    <div class="option-btns" id="memoriesOptions" style="display:none;">
+      <button id="revealBtn">Show that</button>
+      <button id="noThanksBtn">No Thanks</button>
+    </div>
+    <button class="secondary" id="backFromSurprise">← Back</button>
   </div>
 </div>
 
+<!-- MEMORIES REVEAL PAGE -->
 <div class="page hidden" id="memoriesRevealPage">
-  <div class="card">
-    <div id="photoDisplay"></div>
-    <button id="prevPhoto">← Prev</button>
-    <button id="nextPhoto">Next →</button>
-    <button id="backFromReveal" class="back-btn">← Back</button>
+  <div class="card reveal-container">
+    <div class="photo-display" id="photoDisplay"></div>
+    <div class="option-btns">
+      <button class="arrow-btn" id="prevPhoto">← Prev</button>
+      <button class="arrow-btn" id="nextPhoto">Next →</button>
+    </div>
+    <button class="secondary" id="backFromReveal">← Back</button>
   </div>
-  
 </div>
 
 </div>
 
 <script>
-const nameInput=document.getElementById("nameInput"),
+/* START AFTER NAME */
+const nameScreen=document.getElementById("nameScreen"),
+      nameInput=document.getElementById("nameInput"),
       startBtn=document.getElementById("startBtn"),
       scene=document.querySelector(".scene");
 
-/* START */
-function startApp(){
-  const name=nameInput.value.trim()||"Akka";
+startBtn.onclick=()=>{
+  const name=nameInput.value.trim() || "Sister...";
   document.getElementById("friendName").textContent="Dear "+name+" 💖";
-  document.getElementById("nameScreen").style.display="none";
+  nameScreen.style.display="none";
   scene.style.display="block";
   typeWriter();
   initPhotos();
-}
-
-startBtn.onclick=startApp;
-nameInput.addEventListener("keydown",e=>{if(e.key==="Enter")startApp()});
-window.onload=()=>nameInput.focus();
+};
 
 /* TYPEWRITER */
-const lines=[
-  "You are my lovely Sister 💖",
+const lines=["You are my lovely Sister 💖",
   "Enjoy every single Moment in your Life ✨",
   "You are my biggest strength 💫",
-  "Love you forever Pottakka💕"
-];
-
+  "Love you forever Pottakka💕"];
 let li=0,ci=0,typed=document.getElementById("typedLine");
-function typeWriter(){
- (function type(){
-   if(ci<lines[li].length){
-     typed.textContent+=lines[li][ci++];
-     setTimeout(type,45);
-   }else{
-     setTimeout(()=>{
-       typed.textContent="";
-       ci=0;
-       li=(li+1)%lines.length;
-       type();
-     },2000);
-   }
- })();
-}
+function typeWriter(){(function type(){if(ci<lines[li].length){typed.textContent+=lines[li][ci++];setTimeout(type,45)}
+else{setTimeout(()=>{typed.textContent="";ci=0;li=(li+1)%lines.length;type()},2000)}})()}
 
-/* PAGE SWITCH */
-function flip(from,to){
-  from.classList.add("hidden");
-  to.classList.remove("hidden");
-}
-
+/* PAGE FLIP */
 const mainPage=document.getElementById("mainPage"),
       surprisePage=document.getElementById("surprisePage"),
       wishPage=document.getElementById("wishPage"),
-      memoriesRevealPage=document.getElementById("memoriesRevealPage");
+      memoriesRevealPage=document.getElementById("memoriesRevealPage"),
+      surpriseBtn=document.getElementById("surpriseBtn"),
+      wishBtn=document.getElementById("wishBtn"),
+      backFromSurprise=document.getElementById("backFromSurprise"),
+      backFromWish=document.getElementById("backFromWish"),
+      revealBtn=document.getElementById("revealBtn"),
+      noThanksBtn=document.getElementById("noThanksBtn"),
+      backFromReveal=document.getElementById("backFromReveal"),
+      memoriesQuestion=document.getElementById("memoriesQuestion"),
+      memoriesOptions=document.getElementById("memoriesOptions");
 
-document.getElementById("surpriseBtn").onclick=()=>flip(mainPage,surprisePage);
-document.getElementById("wishBtn").onclick=()=>flip(mainPage,wishPage);
-document.getElementById("backFromWish").onclick=()=>flip(wishPage,mainPage);
-document.getElementById("backFromSurprise").onclick=()=>flip(surprisePage,mainPage);
-document.getElementById("revealBtn").onclick=()=>flip(surprisePage,memoriesRevealPage);
-document.getElementById("backFromReveal").onclick=()=>flip(memoriesRevealPage,surprisePage);
+function flip(from,to){
+  from.classList.add("flip-out");
+  setTimeout(()=>{
+    from.classList.add("hidden");
+    from.classList.remove("flip-out");
+    to.classList.remove("hidden");
+    to.classList.add("flip-in");
+  },400);
+}
 
-/* PHOTOS */
-let photos=["wish1.jpg","wish2.jpeg","wish3.jpeg","wish4.jpeg"],i=0;
-function initPhotos(){show()}
-function show(){document.getElementById("photoDisplay").innerHTML=`<img src="${photos[i]}">`}
-document.getElementById("prevPhoto").onclick=()=>{i=(i-1+photos.length)%photos.length;show()}
-document.getElementById("nextPhoto").onclick=()=>{i=(i+1)%photos.length;show()}
+// Surprise button
+surpriseBtn.onclick=()=>{
+  flip(mainPage,surprisePage);
+  // Show question + options only for Surprise
+  setTimeout(()=>{
+    memoriesQuestion.style.display="block";
+    memoriesOptions.style.display="flex";
+  },800);
+};
 
-/* CONFETTI BURST ON CLICK */
-document.querySelectorAll("button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    for(let i=0;i<25;i++){
-      let c=document.createElement("div");
-      c.className="confetti";
-      c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-      c.style.setProperty("--x",(Math.random()*300-150)+"px");
-      c.style.setProperty("--y",(Math.random()*300-150)+"px");
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(),800);
-    }
-  });
-});
+// Wish button
+wishBtn.onclick=()=>flip(mainPage,wishPage);
+
+// Back buttons
+backFromSurprise.onclick=()=>flip(surprisePage,mainPage);
+backFromWish.onclick=()=>flip(wishPage,mainPage);
+noThanksBtn.onclick=()=>flip(surprisePage,mainPage);
+revealBtn.onclick=()=>flip(surprisePage,memoriesRevealPage);
+backFromReveal.onclick=()=>flip(memoriesRevealPage,surprisePage);
+
+/* FLOATING BALLOONS */
+function initBalloons(){
+  for(let i=0;i<12;i++){
+    const b=document.createElement("div");
+    b.className="balloon";
+    const colors=["#ff80ab","#ffd740","#82b1ff","#b388ff","#69f0ae"];
+    b.style.background=colors[Math.floor(Math.random()*colors.length)];
+    b.style.left=Math.random()*100+"vw";
+    b.style.animationDuration=(10+Math.random()*8)+"s";
+    b.style.animationDelay=Math.random()*5+"s";
+    document.body.appendChild(b);
+  }
+}
+
+/* PHOTOS SLIDESHOW */
+let photos=[],currentIndex=0;
+function initPhotos(){
+  photos=[
+    "wish1.jpg","wish2.jpeg","wish3.jpeg","wish4.jpeg"
+  ];
+  showPhoto(currentIndex);
+}
+function showPhoto(index){
+  const display=document.getElementById("photoDisplay");
+  display.innerHTML=`<img src="${photos[index]}" alt="Memory ${index+1}">`;
+}
+document.getElementById("prevPhoto").onclick=()=>{
+  currentIndex=(currentIndex-1+photos.length)%photos.length;
+  showPhoto(currentIndex);
+};
+document.getElementById("nextPhoto").onclick=()=>{
+  currentIndex=(currentIndex+1)%photos.length;
+  showPhoto(currentIndex);
+};
 </script>
-
 </body>
 </html>
