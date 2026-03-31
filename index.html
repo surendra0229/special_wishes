@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Akka 🎂</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",system-ui,sans-serif}
+
+/* BODY & MAIN BACKGROUND */
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at top, #8e2de2, #4a00e0, #ff0080); /* deep purple → violet → neon pink */
+  color:#fff;
+  overflow:hidden;
+  position:relative;
+}
+
+/* NAME ENTRY SCREEN */
+#nameScreen{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:10;
+}
+#nameScreen h2{margin-bottom:20px;font-size:2rem;text-align:center}
+#nameInput{padding:12px 18px;font-size:1rem;border-radius:8px;border:none;outline:none;width:250px;margin-bottom:16px}
+#startBtn{padding:10px 20px;border:none;border-radius:999px;background:linear-gradient(135deg, #ff6ec7, #ffd200); color:#1b0030;font-size:.95rem;cursor:pointer}
+
+/* CONFETTI BURST */
+.confetti{
+  position:fixed;
+  width:8px;height:8px;
+  top:50%;left:50%;
+  opacity:0.9;
+  border-radius:50%;
+  animation:explode 0.8s ease-out forwards;
+  z-index:999;
+}
+@keyframes explode{
+  to{
+    transform:translate(var(--x),var(--y)) scale(0.5);
+    opacity:0;
+  }
+}
+
+/* SCENE & PAGES */
+.scene{perspective:1200px;position:relative;min-height:100vh;display:none;}
+.page{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .8s ease,opacity .5s ease}
+.hidden{opacity:0;pointer-events:none}
+.flip-out{transform:rotateY(-90deg)}
+
+.container,.card{
+  width:min(480px,95vw);
+  background:rgba(0,0,0,.3); /* darker glass effect */
+  border-radius:26px;
+  padding:30px 22px;
+  text-align:center;
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 45px rgba(0,0,0,.55);
+}
+
+/* TITLE & TEXT */
+h1{
+  font-size:2.2rem;
+  background: linear-gradient(90deg, #ffdd00, #ff00ff, #00ffff); /* gold → magenta → cyan */
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.subtitle{letter-spacing:.2em;font-size:.85rem;margin:8px 0 14px;color:#ffd700;} /* rich gold */
+.name{color:#ff69b4;font-size:1.2rem;font-weight:600;margin-bottom:14px;} /* hot pink */
+.message,.wish-text{font-size:.95rem;line-height:1.7;margin-bottom:16px}
+.typed{border-right:2px solid #fff;white-space:nowrap;overflow:hidden;min-height:22px;margin-bottom:18px}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+button{
+  padding:10px 18px;border:none;border-radius:999px;
+  background:linear-gradient(135deg,#ff6ec7,#ffd200);
+  color:#1b0030;font-size:.85rem;cursor:pointer;
+}
+.secondary{
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.8);
+  color:#fff;
+}
+.arrow-btn{
+  padding:8px 16px;border:none;border-radius:999px;
+  background:linear-gradient(135deg,#ff6ec7,#ffd200);color:#1b0030;font-size:.85rem;cursor:pointer;margin:8px;
+}
+
+/* PHOTO DISPLAY */
+.photo-display img{
+  max-width:90vw;
+  max-height:70vh;
+  border-radius:16px;
+  box-shadow:0 10px 20px rgba(0,0,0,.45);
+}
+.photo-controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:10px;
+}
+.back-btn{
+  display:block;
+  margin:15px auto 0;
+}
+.option-btns{display:flex;gap:20px;justify-content:center;margin-top:12px;}
+
+/* PAGE-SPECIFIC BACKGROUNDS */
+#mainPage{background: radial-gradient(circle at top left, #8e2de2, #4a00e0, #ff0080);}
+#wishPage{background: radial-gradient(circle at top right, #ff5f6d, #ffc371, #ff69b4);}
+#surprisePage{background: radial-gradient(circle at bottom left, #00c3ff, #ffff1c, #ff0080);}
+#memoriesRevealPage{background: radial-gradient(circle at bottom right, #7b4397, #dc2430, #ff69b4);}
+</style>
+</head>
+<body>
+
+<div id="nameScreen">
+  <h2>Enter your name 💖</h2>
+  <input type="text" id="nameInput" placeholder="Your name here">
+  <button id="startBtn">Start 🎉</button>
+</div>
+
+<div class="scene">
+
+<div class="page" id="mainPage">
+  <div class="container">
+    <h1>Happy Birthday</h1>
+    <div class="subtitle">to my lovely sister</div>
+    <div class="name" id="friendName">Pottakka💖😜</div>
+    <p class="message">You are not just my sister — you are my strength, my supporter, my guide, and my forever lovely Sister💗💖💫</p>
+    <p class="typed" id="typedLine"></p>
+    <div class="btn-row">
+      <button id="surpriseBtn">See Your Surprise 🎁</button>
+      <button class="secondary" id="wishBtn">Open My Wish 💌</button>
+    </div>
+  </div>
+</div>
+
+<div class="page hidden" id="wishPage">
+  <div class="card">
+    <h2>🎉 My Wish ! 🎉</h2>
+    <p class="message">
+      You are amazing, and I wish you endless happiness 💖<br>
+      Whenever you get low, just call me or Text me I put my efforts to heal you and make you Smile 😊😇<br>
+      I will always be there for you Akka 😌🧿
+    </p>
+    <button class="secondary" id="backFromWish">← Back</button>
+  </div>
+</div>
+
+<div class="page hidden" id="surprisePage">
+  <div class="card">
+    <h2>Our Memories 📸</h2>
+    <button id="revealBtn">Reveal..🫣</button>
+    <button id="backFromSurprise">← Back</button>
+  </div>
+</div>
+
+<div class="page hidden" id="memoriesRevealPage">
+  <div class="card">
+    <div id="photoDisplay"></div>
+    <button id="prevPhoto">← Prev</button>
+    <button id="nextPhoto">Next →</button>
+    <button id="backFromReveal" class="back-btn">← Back</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const nameInput=document.getElementById("nameInput"),
+      startBtn=document.getElementById("startBtn"),
+      scene=document.querySelector(".scene");
+
+/* START */
+function startApp(){
+  const name=nameInput.value.trim()||"Akka";
+  document.getElementById("friendName").textContent="Dear "+name+" 💖";
+  document.getElementById("nameScreen").style.display="none";
+  scene.style.display="block";
+  typeWriter();
+  initPhotos();
+}
+
+startBtn.onclick=startApp;
+nameInput.addEventListener("keydown",e=>{if(e.key==="Enter")startApp()});
+window.onload=()=>nameInput.focus();
+
+/* TYPEWRITER */
+const lines=[
+  "You are my lovely Sister 💖",
+  "Enjoy every single Moment in your Life ✨",
+  "You are my biggest strength 💫",
+  "Love you forever Pottakka💕"
+];
+
+let li=0,ci=0,typed=document.getElementById("typedLine");
+function typeWriter(){
+ (function type(){
+   if(ci<lines[li].length){
+     typed.textContent+=lines[li][ci++];
+     setTimeout(type,45);
+   }else{
+     setTimeout(()=>{
+       typed.textContent="";
+       ci=0;
+       li=(li+1)%lines.length;
+       type();
+     },2000);
+   }
+ })();
+}
+
+/* PAGE SWITCH */
+function flip(from,to){
+  from.classList.add("hidden");
+  to.classList.remove("hidden");
+}
+
+const mainPage=document.getElementById("mainPage"),
+      surprisePage=document.getElementById("surprisePage"),
+      wishPage=document.getElementById("wishPage"),
+      memoriesRevealPage=document.getElementById("memoriesRevealPage");
+
+document.getElementById("surpriseBtn").onclick=()=>flip(mainPage,surprisePage);
+document.getElementById("wishBtn").onclick=()=>flip(mainPage,wishPage);
+document.getElementById("backFromWish").onclick=()=>flip(wishPage,mainPage);
+document.getElementById("backFromSurprise").onclick=()=>flip(surprisePage,mainPage);
+document.getElementById("revealBtn").onclick=()=>flip(surprisePage,memoriesRevealPage);
+document.getElementById("backFromReveal").onclick=()=>flip(memoriesRevealPage,surprisePage);
+
+/* PHOTOS */
+let photos=["pic_4.jpeg","siri1.jpg"],i=0;
+function initPhotos(){show()}
+function show(){document.getElementById("photoDisplay").innerHTML=`<img src="${photos[i]}">`}
+document.getElementById("prevPhoto").onclick=()=>{i=(i-1+photos.length)%photos.length;show()}
+document.getElementById("nextPhoto").onclick=()=>{i=(i+1)%photos.length;show()}
+
+/* CONFETTI BURST ON CLICK */
+document.querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    for(let i=0;i<25;i++){
+      let c=document.createElement("div");
+      c.className="confetti";
+      c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+      c.style.setProperty("--x",(Math.random()*300-150)+"px");
+      c.style.setProperty("--y",(Math.random()*300-150)+"px");
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),800);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
