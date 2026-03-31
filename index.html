@@ -217,7 +217,7 @@ document.getElementById("revealBtn").onclick=()=>flip(surprisePage,memoriesRevea
 document.getElementById("backFromReveal").onclick=()=>flip(memoriesRevealPage,surprisePage);
 
 /* PHOTOS */
-let photos=["pic_4.jpeg","siri1.jpg"],i=0;
+let photos=["wish1.jpg","wish2.jpeg","wish3.jpeg","wish4.jpeg"],i=0;
 function initPhotos(){show()}
 function show(){document.getElementById("photoDisplay").innerHTML=`<img src="${photos[i]}">`}
 document.getElementById("prevPhoto").onclick=()=>{i=(i-1+photos.length)%photos.length;show()}
